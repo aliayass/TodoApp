@@ -1,110 +1,81 @@
-TodoApp
+# TodoApp
 
-.NET 9 ve ASP.NET Core Razor Pages kullanılarak geliştirilmiş, eğitim amaçlı hafif ve pratik bir yapılacaklar (Todo) listesi uygulamasıdır.
+**TodoApp**, .NET 9 ve ASP.NET Core Razor Pages kullanılarak geliştirilmiş basit ve kullanışlı bir görev yönetimi uygulamasıdır.
 
-Bu proje; Razor Pages mimarisi, Model Binding, Dependency Injection, CRUD işlemleri, Partial View kullanımı ve In-Memory veri yönetimini uygulamalı olarak göstermek amacıyla hazırlanmıştır.
+Proje; **Razor Pages, CRUD işlemleri, Model Binding, Dependency Injection, Partial View ve form doğrulama** gibi ASP.NET Core konularını uygulamalı olarak geliştirmek amacıyla hazırlanmıştır.
 
-Özellikler
+## Özellikler
 
-CRUD İşlemleri: Görev oluşturma, listeleme, düzenleme ve silme.
+- Görev oluşturma, listeleme, düzenleme ve silme
+- Başlık ve açıklamaya göre arama
+- Öncelik ve durum filtreleme
+- Bitiş tarihine göre sıralama
+- Data Annotations ile form doğrulama
+- TempData ile kullanıcı bildirimleri
+- Create ve Edit sayfalarında ortak Partial View kullanımı
+- In-Memory veri yönetimi
 
-Arama ve Filtreleme: Başlık/açıklama araması, öncelik ve durum (Bekliyor/Tamamlandı) filtreleme.
+## Teknolojiler
 
-Sıralama: Bitiş tarihine göre görev sıralama.
+- **.NET 9 / C#**
+- **ASP.NET Core Razor Pages**
+- **Bootstrap 5**
+- **HTML5 / CSS3**
+- **ConcurrentDictionary**
+- **Dependency Injection**
 
-Form Doğrulama: Data Annotations ile sunucu taraflı model kontrolü.
+## Proje Yapısı
 
-Kullanıcı Bildirimleri: TempData destekli durum mesajları.
-
-Yeniden Kullanılabilir Arayüz: Create ve Edit formları için ortak Partial View (_TodoForm.cshtml).
-
-In-Memory Store: Kurulum gerektirmeyen, bellek içi başlangıç verileri.
-
-Teknolojiler
-
-Platform: .NET 9 (C#)
-
-Web Çerçevesi: ASP.NET Core Razor Pages
-
-Arayüz: Bootstrap 5, HTML5, CSS3
-
-Veri Depolama: In-Memory (ConcurrentDictionary)
-
-Proje Yapısı
-
+```text
 TodoApp/
-│
 ├── Models/
 │   ├── Todo.cs
 │   └── TodoPriority.cs
 │
 ├── Pages/
 │   └── Todos/
-│       ├── Index.cshtml / .cs       # Listeleme, filtreleme ve arama
-│       ├── Create.cshtml / .cs      # Yeni görev oluşturma
-│       ├── Edit.cshtml / .cs        # Görev düzenleme
-│       ├── Delete.cshtml / .cs      # Görev silme onayı
-│       └── _TodoForm.cshtml         # Ortak form bileşeni
+│       ├── Index.cshtml
+│       ├── Create.cshtml
+│       ├── Edit.cshtml
+│       ├── Delete.cshtml
+│       └── _TodoForm.cshtml
 │
 ├── Services/
-│   ├── ITodoStore.cs                # Depolama arayüzü
-│   └── InMemoryTodoStore.cs         # Bellek içi servis implementasyonu
+│   ├── ITodoStore.cs
+│   └── InMemoryTodoStore.cs
 │
 ├── Program.cs
 └── TodoApp.csproj
+```
 
+## Mimari
 
-Öne Çıkan Mimari Yaklaşımlar
+Veri erişimi `ITodoStore` interface'i üzerinden sağlanarak **Dependency Injection** kullanılmıştır.
 
-Razor Pages & PageModel: UI (.cshtml) ve sunucu mantığı (.cshtml.cs) birbirinden izole edilerek temiz bir sayfa hiyerarşisi sağlandı.
+Create ve Edit sayfalarında ortak form alanları `_TodoForm.cshtml` Partial View içerisinde tutulmuş ve kod tekrarının azaltılması hedeflenmiştir.
 
-Model Binding: Form alanları [BindProperty] özniteliğiyle doğrudan güçlü tipli modellere bağlanır.
+## Kurulum
 
-Partial View: Tekrar eden form alanları _TodoForm.cshtml bileşenine taşınarak kod tekrarı önlendi (DRY).
-
-Dependency Injection: Veri erişimi ITodoStore soyutlaması üzerinden enjekte edilerek gevşek bağlılık (loose coupling) sağlandı.
-
-Kurulum ve Çalıştırma
-
-Gereksinimler
-
-.NET 9 SDK
-
-Git
-
-Adımlar
-
-Depoyu klonlayın:
-
+```bash
 git clone <repository-url>
 cd TodoApp
-
-
-Bağımlılıkları geri yükleyin:
-
 dotnet restore
-
-
-Uygulamayı çalıştırın:
-
 dotnet run
+```
 
+Uygulama çalıştırıldıktan sonra terminalde belirtilen `localhost` adresinden erişilebilir.
 
-Terminalde belirtilen adresi tarayıcınızda açın (varsayılan: https://localhost:5001 veya http://localhost:5000).
+> **Not:** Veriler In-Memory olarak tutulmaktadır. Uygulama yeniden başlatıldığında yapılan değişiklikler sıfırlanır.
 
-Not: Veriler bellekte (In-Memory) tutulduğundan, uygulama durdurulduğunda yapılan değişiklikler sıfırlanır ve varsayılan tohum (seed) veriler yeniden yüklenir.
+## Roadmap
 
-Gelecek Planları (Roadmap)
+- [ ] Entity Framework Core
+- [ ] SQLite / SQL Server
+- [ ] Pagination
+- [ ] ASP.NET Core Identity
+- [ ] Unit & Integration Tests
+- [ ] AJAX ile sayfa yenilemeden durum güncelleme
 
-[ ] Entity Framework Core & SQLite / SQL Server entegrasyonu
+## Lisans
 
-[ ] Sayfalama (Pagination) desteği
-
-[ ] AJAX ile sayfa yenilenmeden durum güncelleme
-
-[ ] ASP.NET Core Identity ile kullanıcı yönetimi
-
-[ ] Unit & Integration testleri
-
-
-Bu proje eğitim ve kişisel gelişim amaçlı hazırlanmıştır.
+MIT
