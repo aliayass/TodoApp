@@ -1,80 +1,88 @@
 # TodoApp
 
-**TodoApp**, .NET 9 ve ASP.NET Core Razor Pages kullanılarak geliştirilmiş basit ve kullanışlı bir görev yönetimi uygulamasıdır.
+**TodoApp** basit bir görev (Todo) yönetimi uygulamasıdır. Proje, .NET 9 ve ASP.NET Core Razor Pages kullanılarak geliştirilmiştir ve eğitim amaçlı temel ASP.NET Core kavramlarını örneklemektedir.
 
-Proje; **Razor Pages, CRUD işlemleri, Model Binding, Dependency Injection, Partial View ve form doğrulama** gibi ASP.NET Core konularını uygulamalı olarak geliştirmek amacıyla hazırlanmıştır.
+Kısa açıklama: Razor Pages ile CRUD işlemleri, model binding, form doğrulama, dependency injection ve In-Memory veri saklama yaklaşımlarını içerir.
 
-## Özellikler
+## Öne Çıkanlar
 
 - Görev oluşturma, listeleme, düzenleme ve silme
 - Başlık ve açıklamaya göre arama
 - Öncelik ve durum filtreleme
 - Bitiş tarihine göre sıralama
-- Data Annotations ile form doğrulama
-- TempData ile kullanıcı bildirimleri
-- Create ve Edit sayfalarında ortak Partial View kullanımı
-- In-Memory veri yönetimi
+- Model doğrulaması: Data Annotations + özel validator (Validators/TodoValidator.cs)
+- TempData ile kullanıcı bildirimleri (Başarı/Hata mesajları)
+- Create ve Edit sayfalarında ortak Partial View (`_TodoForm.cshtml`)
+- In-Memory veri yönetimi (ConcurrentDictionary tabanlı `InMemoryTodoStore`)
 
 ## Teknolojiler
 
-- **.NET 9 / C#**
-- **ASP.NET Core Razor Pages**
-- **Bootstrap 5**
-- **HTML5 / CSS3**
-- **ConcurrentDictionary**
-- **Dependency Injection**
+- .NET 9 / C#
+- ASP.NET Core Razor Pages
+- Bootstrap 5
+- ConcurrentDictionary (In-Memory store)
+- Dependency Injection
 
-## Proje Yapısı
+## Proje Yapısı (özet)
 
-```text
 TodoApp/
-├── Models/
-│   ├── Todo.cs
-│   └── TodoPriority.cs
-│
-├── Pages/
+├── Models/               # Domain modelleri (Todo, TodoPriority)
+├── Pages/                # Razor Pages (Pages/Todos/...)
 │   └── Todos/
 │       ├── Index.cshtml
 │       ├── Create.cshtml
 │       ├── Edit.cshtml
 │       ├── Delete.cshtml
 │       └── _TodoForm.cshtml
-│
-├── Services/
-│   ├── ITodoStore.cs
-│   └── InMemoryTodoStore.cs
-│
+├── Services/             # ITodoStore, InMemoryTodoStore
+├── Validators/           # Custom validation (TodoValidator.cs)
 ├── Program.cs
-└── TodoApp.csproj
-```
+└── TodoApp.slnx
 
-## Mimari
+(Not: proje kökünde TodoApp.slnx ve TodoApp.csproj dosyaları bulunmaktadır.)
 
-Veri erişimi `ITodoStore` interface'i üzerinden sağlanarak **Dependency Injection** kullanılmıştır.
+## Çalıştırma
 
-Create ve Edit sayfalarında ortak form alanları `_TodoForm.cshtml` Partial View içerisinde tutulmuş ve kod tekrarının azaltılması hedeflenmiştir.
+Geliştirme için iki yaygın yol:
 
-## Kurulum
+1) Komut satırı (dotnet CLI):
 
-```bash
-git clone <repository-url>
-cd TodoApp
+```powershell
 dotnet restore
-dotnet run
+dotnet build
+dotnet run --project .\TodoApp.csproj
 ```
 
-Uygulama çalıştırıldıktan sonra terminalde belirtilen `localhost` adresinden erişilebilir.
+2) Visual Studio:
+- Solution dosyasını (TodoApp.slnx) Visual Studio 2022/2026 ile açın.
+- Debug (F5) veya Run (Ctrl+F5) ile projeyi başlatın.
 
-> **Not:** Veriler In-Memory olarak tutulmaktadır. Uygulama yeniden başlatıldığında yapılan değişiklikler sıfırlanır.
+Alternatif: Hızlı geliştirme için `dotnet watch run` kullanabilirsiniz.
 
-## Roadmap
+Uygulama çalıştıktan sonra tarayıcıda terminal/VS tarafından gösterilen `https://localhost:5xxx` adresine gidin.
 
-- [ ] Entity Framework Core
-- [ ] SQLite / SQL Server
+> Not: Veri depolama In-Memory olduğundan uygulama yeniden başlatıldığında veriler sıfırlanır.
+
+## Geliştirme Notları
+
+- Doğrulama: Model üzerinde Data Annotations kullanılmıştır; ek doğrulama logicleri Validators/TodoValidator.cs içinde yer alır.
+- Servisler: `ITodoStore` arayüzü ile veri erişimi soyutlanmıştır; `InMemoryTodoStore` uygulaması uygulamaya DI olarak eklenir.
+- Partial View: Create/Edit sayfalarında `_TodoForm.cshtml` kullanılarak form alanları paylaşılmaktadır.
+
+## Roadmap / Yapılacaklar
+
+- [ ] Entity Framework Core ile kalıcı veri katmanı
+- [ ] SQLite / SQL Server desteği
 - [ ] Pagination
-- [ ] ASP.NET Core Identity
+- [ ] ASP.NET Core Identity (kimlik & yetkilendirme)
 - [ ] Unit & Integration Tests
-- [ ] AJAX ile sayfa yenilemeden durum güncelleme
+- [ ] AJAX ile durum güncelleme (sayfa yenilemeden)
+
+## Katkıda Bulunma
+
+1. Repoyu fork edin
+2. Yeni bir branch oluşturun
+3. Değişikliklerinizi PR ile gönderin
 
 ## Lisans
 
