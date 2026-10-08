@@ -1,12 +1,19 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Repositories;
 using TodoApp.Services;
+using TodoApp.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<TodoValidator>();
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
